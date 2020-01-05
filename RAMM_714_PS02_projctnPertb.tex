@@ -62,7 +62,7 @@ which gives the following equilibrium conditions (I drop subndices i,t and use r
 \begin{eqnarray}
      [k_1^T]: & &                                                  \theta_1 \alpha_1 (k_{1}^T)^{\frac{-1}{\lambda_1}} \left( \theta_1 (k_{1}^T)^{\frac{\lambda_1-1}{\lambda_1}} +(1-\theta_1)(k_{1}^I)^{\frac{\lambda_1-1}{\lambda_1}} \right)^{\frac{\lambda_1}{\lambda_1-1}\alpha_1-1} \left( e^{z_{1}}l_{1} \right)^{\gamma_1}   \nonumber \\
      & = &  E_z\left[\frac{1}{1+r_i} J_{k_1^T}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime})   \right] = E_z\left[\frac{1}{1+r_i} J_{k_1^T}(states^\prime)   \right] \nonumber \\
-     & = &  E_z\left[\frac{1}{1+r_i} J_{k^I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime}) k_{k_1^T}^{\prime I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime})  \right] \nonumber \\
+     & = &  E_z\left[\frac{1}{1+r_i} J_{k^I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime}) k_{k_1^T}^{\prime I}(k^{ T},k^{ I},b,z_{1},z_{2})  \right] \nonumber \\
      & = &  E_z \left[ \frac{1}{1+r_i} \{ (1-\theta_1) \alpha_1 (k_{1}^I(states^\prime) )^{\frac{-1}{\lambda_1}}    \left( \theta_1 (k_{1}^T(states^\prime) )^{\frac{\lambda_1-1}{\lambda_1}} +(1-\theta_1)(k_{1}^I(states^\prime) )^{\frac{\lambda_1-1}{\lambda_1}} \right)^{\frac{\lambda_1}{\lambda_1-1}\alpha_1-1} \right. \nonumber \\
      &  &  \left.  \left( e^{z_{1}^\prime}l_{1}(states^\prime) \right)^{\gamma_1}  \right\rbrace    \nonumber \\
      &  &  \left.  \left\lbrace \theta_2 \alpha_2 (k^T - k_{1}^T)^{\frac{-1}{\lambda_2}} \left( \theta_2 (k^T - k_{1}^T)^{\frac{\lambda_2-1}{\lambda_2}} +(1-\theta_2)(k^I - k_{1}^I)^{\frac{\lambda_2-1}{\lambda_2}} \right)^{\frac{\lambda_2}{\lambda_2-1}\alpha_2-1} \left( e^{z_{2}}l_{2} \right)^{\gamma_2} \right\rbrace  \right]
@@ -72,7 +72,7 @@ which gives the following equilibrium conditions (I drop subndices i,t and use r
 \begin{eqnarray}
      [k_1^I]: & &                                                 (1- \theta_1) \alpha_1 (k_{1}^I)^{\frac{-1}{\lambda_1}} \left( \theta_1 (k_{1}^T)^{\frac{\lambda_1-1}{\lambda_1}} +(1-\theta_1)(k_{1}^I)^{\frac{\lambda_1-1}{\lambda_1}} \right)^{\frac{\lambda_1}{\lambda_1-1}\alpha_1-1} \left( e^{z_{1}}l_{1} \right)^{\gamma_1}   \nonumber \\
      & = &  E_z\left[\frac{1}{1+r_i} J_{k_1^I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime})   \right] = E_z\left[\frac{1}{1+r_i} J_{k_1^I}(states^\prime)   \right] \nonumber \\
-     & = &  E_z\left[\frac{1}{1+r_i} J_{k^I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime}) k_{k_1^I}^{\prime I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime})  \right] \nonumber \\
+     & = &  E_z\left[\frac{1}{1+r_i} J_{k^I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime}) k_{k_1^I}^{\prime I}(k^{T},k^{I},b{\prime},z_{1},z_{2})  \right] \nonumber \\
      & = &  E_z [ \frac{1}{1+r_i} \{ (1-\theta_1) \alpha_1 (k_{1}^I(states^\prime) )^{\frac{-1}{\lambda_1}}    \left( \theta_1 (k_{1}^T(states^\prime) )^{\frac{\lambda_1-1}{\lambda_1}} +(1-\theta_1)(k_{1}^I(states^\prime) )^{\frac{\lambda_1-1}{\lambda_1}} \right)^{\frac{\lambda_1}{\lambda_1-1}\alpha_1-1} \nonumber \\
      &  &    \left( e^{z_{1}^\prime}l_{1}(states^\prime) \right)^{\gamma_1}  \}   \nonumber \\
      &  &   \left. \left\lbrace (1-\theta_2) \alpha_2 (k^I - k_{1}^I)^{\frac{-1}{\lambda_2}} \left( \theta_2 (k_{2}^T)^{\frac{\lambda_2-1}{\lambda_2}} +(1-\theta_2)(k^I - k_{1}^I)^{\frac{\lambda_2-1}{\lambda_2}} \right)^{\frac{\lambda_2}{\lambda_2-1}\alpha_2-1} \left( e^{z_{2}}l_{2} \right)^{\gamma_2} +(1-\delta_I) \right\rbrace  \right] \quad 
@@ -105,10 +105,17 @@ where equation (2) uses: $ k_2^T = k^T - k_1^T$.
 
 %[l_2]
 \begin{eqnarray}
-     [l_2]: & &  \gamma_2 (e^{z_2 })^{\gamma_2} l_2^{\gamma_2 - 1} \left( \theta_2 (k_{2}^T)^{\frac{\lambda_2-1}{\lambda_2}} +(1-\theta_2)(k_{2}^I)^{\frac{\lambda_2-1}{\lambda_2}} \right)^{\frac{\lambda_2}{\lambda_2-1}\alpha_2}  \nonumber \\
-     & = &  \gamma_2 (e^{z_2 })^{\gamma_2} l_2^{\gamma_2 - 1} \left( \theta_2 (k^T - k_{1}^T)^{\frac{\lambda_2-1}{\lambda_2}} +(1-\theta_2)(k^I -k_{1}^I)^{\frac{\lambda_2-1}{\lambda_2}} \right)^{\frac{\lambda_2}{\lambda_2-1}\alpha_2}  \nonumber \\
-     & = &  w  \quad \quad
+     [l_2]: &  &  E_z\left[\frac{1}{1+r_i} J_{k^I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime}) k_{l_2}^{\prime I}(k^{T},k^{I},b{\prime},z_{1},z_{2})  \right] \nonumber \\
+     & = &  E_z \left[ \frac{1}{1+r_i} \{ (1-\theta_1) \alpha_1 (k_{1}^I(states^\prime) )^{\frac{-1}{\lambda_1}}    \left( \theta_1 (k_{1}^T(states^\prime) )^{\frac{\lambda_1-1}{\lambda_1}} +(1-\theta_1)(k_{1}^I(states^\prime) )^{\frac{\lambda_1-1}{\lambda_1}} \right)^{\frac{\lambda_1}{\lambda_1-1}\alpha_1-1} \right. \nonumber \\
+     &  &  \left.  \left( e^{z_{1}^\prime}l_{1}(states^\prime) \right)^{\gamma_1}  \right\rbrace    \nonumber \\
+     &  &  \left.  \left\lbrace \gamma_2 (e^{z_2 })^{\gamma_2} l_2^{\gamma_2 - 1} \left( \theta_2 (k_{2}^T)^{\frac{\lambda_2-1}{\lambda_2}} +(1-\theta_2)(k_{2}^I)^{\frac{\lambda_2-1}{\lambda_2}} \right)^{\frac{\lambda_2}{\lambda_2-1}\alpha_2} \right\rbrace  \right] \nonumber \\
+     & = &  w 
 \end{eqnarray}
+%     & = &  \gamma_2 (e^{z_2 })^{\gamma_2} l_2^{\gamma_2 - 1} \left( \theta_2 (k^T - k_{1}^T)^{\frac{\lambda_2-1}{\lambda_2}} +(1-\theta_2)(k^I -k_{1}^I)^{\frac{\lambda_2-1}{\lambda_2}} \right)^{\frac{\lambda_2}{\lambda_2-1}\alpha_2}  \nonumber \\
+
+where again: $ k_2^T = k^T - k_1^T$ and  $ k_2^I = k^I - k_1^I$.
+
+
 
 
 
