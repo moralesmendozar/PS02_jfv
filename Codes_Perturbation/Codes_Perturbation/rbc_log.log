@@ -1,0 +1,54 @@
+Starting Dynare (version 4.5.4).
+Starting preprocessing of the model file ...
+Found 8 equation(s).
+Evaluating expressions...done
+Computing static model derivatives:
+ - order 1
+Computing dynamic model derivatives:
+ - order 1
+ - order 2
+ - order 3
+Processing outputs ...
+done
+Preprocessing completed.
+
+STEADY-STATE RESULTS:
+
+y 		 1.00511
+c 		 0.768872
+i 		 0.236237
+l 		 0.333333
+k 		 9.44947
+r 		 0.035101
+w 		 2.02027
+z 		 0
+
+EIGENVALUES:
+         Modulus             Real        Imaginary
+
+          0.9486           0.9486                0
+            0.95             0.95                0
+           1.065            1.065                0
+       1.819e+19        1.819e+19                0
+
+
+There are 2 eigenvalue(s) larger than 1 in modulus 
+for 2 forward-looking variable(s)
+
+The rank condition is verified.
+
+
+MODEL SUMMARY
+
+  Number of variables:         8
+  Number of stochastic shocks: 1
+  Number of state variables:   2
+  Number of jumpers:           2
+  Number of static variables:  4
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables          ez
+ez           1.000000
+
+Total computing time : 0h00m01s

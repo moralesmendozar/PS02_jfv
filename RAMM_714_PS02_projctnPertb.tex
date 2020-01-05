@@ -1,0 +1,239 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc} 
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\title{UPENN \\714 \\ Problem Set 02\\ }
+\author{Rodrigo A. Morales M.}
+\date{10. jan. 2020.}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+   \includegraphics[scale=0.05]{logo1.png}
+\end{center}
+
+    
+\subsection*{Contents}
+
+
+\begin{itemize}
+\setlength{\itemsep}{-1ex}
+   \item Part I.
+   \item The model.
+   \item Parameters.
+   \item Part II
+   \item 2.a) 
+\end{itemize}
+
+
+\subsection*{Prof. Jesús Fernández Villaverde.}
+
+
+\subsection*{Part I. The model}
+
+Partial equilibrium problem of a representative agent firm with two technologies, tangible and intangible capital.
+$$ (states_{i,t}) = (k_{i,t}^T,k_{i,t}^I,b_{i,t},z_{1,i,t},z_{2,i,t})$$
+
+$$ (controls_{i,t}) = (k_{1,i,t}^T, k_{1,i,t}^I, k_{i,t+1}^T, l_{1,i,t},l_{2,i,t}, b_{i,t+1}) $$
+
+The producer faces the following recursive problem:
+
+$$ J(states_{i,t}) = \max_{ controls_{i,t} } \left( d_{i,t} + \frac{1}{1+r_{i,t}}  E_{zz} \left[ J(states_{i,t+1}) \right]  \right) $$
+
+\begin{eqnarray*}
+ \textsc{s.t.} \quad d_{i,t} &=& \left( \theta_1 (k_{1,i,t}^T)^{\frac{\lambda_1-1}{\lambda_1}} +(1-\theta_1)(k_{1,i,t}^I)^{\frac{\lambda_1-1}{\lambda_1}} \right)^{\frac{\lambda_1}{\lambda_1-1}\alpha_1} \left( e^{z_{1,i,t}}l_{1,i,t} \right)^{\gamma_1} + (1-\delta_T)k_{i,t}^T - k_{i,t+1}^T -\\
+ & & w (l_{1,i,t} + l_{2,i,t}) + b_{i,t+1} - (1+r_t)b_{i,t} - 0.02(b_{i,t+1}-b_{i,t})^2 -0.01(b_{i,t}-0.2)^2 \\
+ k_{i,t+1}^I & = & \left( \theta_2 (k_{2,i,t}^T)^{\frac{\lambda_2-1}{\lambda_2}} +(1-\theta_2)(k_{2,i,t}^I)^{\frac{\lambda_2-1}{\lambda_2}} \right)^{\frac{\lambda_2}{\lambda_2-1}\alpha_2}\left( e^{z_{2,i,t}}l_{2,i,t} \right)^{\gamma_2} + (1-\delta_I)k_{i,t}^I \\
+ k_{2,i,t}^T  & = & k_{i,t}^T - k_{1,i,t}^T  \\
+ k_{2,i,t}^I  & = & k_{i,t}^I - k_{1,i,t}^I  \\
+\end{eqnarray*}
+
+which gives the following equilibrium conditions (I drop subndices i,t and use recursive formulation notation to make the equations easier to read):
+
+%[k_1^T]
+\begin{eqnarray}
+     [k_1^T]: & &                                                  \theta_1 \alpha_1 (k_{1}^T)^{\frac{-1}{\lambda_1}} \left( \theta_1 (k_{1}^T)^{\frac{\lambda_1-1}{\lambda_1}} +(1-\theta_1)(k_{1}^I)^{\frac{\lambda_1-1}{\lambda_1}} \right)^{\frac{\lambda_1}{\lambda_1-1}\alpha_1-1} \left( e^{z_{1}}l_{1} \right)^{\gamma_1}   \nonumber \\
+     & = &  E_z\left[\frac{1}{1+r_i} J_{k_1^T}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime})   \right] = E_z\left[\frac{1}{1+r_i} J_{k_1^T}(states^\prime)   \right] \nonumber \\
+     & = &  E_z\left[\frac{1}{1+r_i} J_{k^I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime}) k_{k_1^T}^{\prime I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime})  \right] \nonumber \\
+     & = &  E_z \left[ \frac{1}{1+r_i} \{ (1-\theta_1) \alpha_1 (k_{1}^I(states^\prime) )^{\frac{-1}{\lambda_1}}    \left( \theta_1 (k_{1}^T(states^\prime) )^{\frac{\lambda_1-1}{\lambda_1}} +(1-\theta_1)(k_{1}^I(states^\prime) )^{\frac{\lambda_1-1}{\lambda_1}} \right)^{\frac{\lambda_1}{\lambda_1-1}\alpha_1-1} \right. \nonumber \\
+     &  &  \left.  \left( e^{z_{1}^\prime}l_{1}(states^\prime) \right)^{\gamma_1}  \right\rbrace    \nonumber \\
+     &  &  \left.  \left\lbrace \theta_2 \alpha_2 (k^T - k_{1}^T)^{\frac{-1}{\lambda_2}} \left( \theta_2 (k^T - k_{1}^T)^{\frac{\lambda_2-1}{\lambda_2}} +(1-\theta_2)(k^I - k_{1}^I)^{\frac{\lambda_2-1}{\lambda_2}} \right)^{\frac{\lambda_2}{\lambda_2-1}\alpha_2-1} \left( e^{z_{2}}l_{2} \right)^{\gamma_2} \right\rbrace  \right]
+\end{eqnarray}
+
+%[k_1^I]
+\begin{eqnarray}
+     [k_1^I]: & &                                                 (1- \theta_1) \alpha_1 (k_{1}^I)^{\frac{-1}{\lambda_1}} \left( \theta_1 (k_{1}^T)^{\frac{\lambda_1-1}{\lambda_1}} +(1-\theta_1)(k_{1}^I)^{\frac{\lambda_1-1}{\lambda_1}} \right)^{\frac{\lambda_1}{\lambda_1-1}\alpha_1-1} \left( e^{z_{1}}l_{1} \right)^{\gamma_1}   \nonumber \\
+     & = &  E_z\left[\frac{1}{1+r_i} J_{k_1^I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime})   \right] = E_z\left[\frac{1}{1+r_i} J_{k_1^I}(states^\prime)   \right] \nonumber \\
+     & = &  E_z\left[\frac{1}{1+r_i} J_{k^I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime}) k_{k_1^I}^{\prime I}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime})  \right] \nonumber \\
+     & = &  E_z [ \frac{1}{1+r_i} \{ (1-\theta_1) \alpha_1 (k_{1}^I(states^\prime) )^{\frac{-1}{\lambda_1}}    \left( \theta_1 (k_{1}^T(states^\prime) )^{\frac{\lambda_1-1}{\lambda_1}} +(1-\theta_1)(k_{1}^I(states^\prime) )^{\frac{\lambda_1-1}{\lambda_1}} \right)^{\frac{\lambda_1}{\lambda_1-1}\alpha_1-1} \nonumber \\
+     &  &    \left( e^{z_{1}^\prime}l_{1}(states^\prime) \right)^{\gamma_1}  \}   \nonumber \\
+     &  &   \left. \left\lbrace (1-\theta_2) \alpha_2 (k^I - k_{1}^I)^{\frac{-1}{\lambda_2}} \left( \theta_2 (k_{2}^T)^{\frac{\lambda_2-1}{\lambda_2}} +(1-\theta_2)(k^I - k_{1}^I)^{\frac{\lambda_2-1}{\lambda_2}} \right)^{\frac{\lambda_2}{\lambda_2-1}\alpha_2-1} \left( e^{z_{2}}l_{2} \right)^{\gamma_2} +(1-\delta_I) \right\rbrace  \right] \quad 
+\end{eqnarray}
+
+
+where equation (2) uses: $ k_2^T = k^T - k_1^T$.
+
+%[k^{\prime T}]
+\begin{eqnarray}
+     [k^{\prime T}]: & &   1  \nonumber \\
+     & = & E_z\left[\frac{1}{1+r_i} \left\lbrace J_{k^{\prime T}}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime}) \right\rbrace   \right] = E_z\left[\frac{1}{1+r_i} \left\lbrace  J_{k^{\prime T}}(states^\prime) \right\rbrace  \right] \nonumber \\
+     & = & E_z\left[ \frac{1}{1+r_i} \left\lbrace 1-\delta_T + \theta_1 \alpha_1 k_{1}^I(states^\prime)^{\frac{-1}{\lambda_1}} \right. \right. \nonumber \\
+     &   &  \left. \left. \left( \theta_1 k_{1}^T(states^\prime)^{\frac{\lambda_1-1}{\lambda_1}} +(1-\theta_1)k_{1}^I(states^\prime) ^{\frac{\lambda_1-1}{\lambda_1}} \right)^{\frac{\lambda_1}{\lambda_1-1}\alpha_1-1}  \left( e^{z_{1}} l_1(states^\prime) \right)^{\gamma_1} \right\rbrace  \right] \quad \quad
+\end{eqnarray}
+
+%[b^{\prime}]
+\begin{eqnarray}
+     [b^{\prime }]: & &   1 \nonumber \\
+     & = &  0.04(b^\prime - b) +  E_z\left[\frac{1}{1+r_i} \{ J_{b^{\prime}}(k^{\prime T},k^{\prime I},b{\prime},z_{1}{\prime },z_{2}{\prime}) \}  \right] \nonumber \\
+     & = &  0.04(b^\prime - b) +  E_z\left[\frac{1}{1+r_i} \left\lbrace  J_{b^{\prime}}(states^\prime) \right\rbrace  \right] \nonumber \\
+     & = &  0.04(b^\prime - b) +  E_z\left[\frac{1}{1+r_i} \left\lbrace  (1+r) + 0.02(b^\prime - 0.2) - 0.04(b^{\prime \prime} -b\prime) \right\rbrace  \right] \quad \quad
+\end{eqnarray}
+
+%[l_1]
+\begin{eqnarray}
+     [l_1]: & &  \gamma_1 (e^{z_1})^{\gamma_1} l_1^{\gamma_1 - 1} \left( \theta_1 (k_{1}^T)^{\frac{\lambda_1-1}{\lambda_1}} +(1-\theta_1)(k_{1}^I)^{\frac{\lambda_1-1}{\lambda_1}} \right)^{\frac{\lambda_1}{\lambda_1-1}\alpha_1}  \quad \quad \quad \quad \quad  \nonumber \\
+     & = &  w  \quad \quad
+\end{eqnarray}
+
+%[l_2]
+\begin{eqnarray}
+     [l_2]: & &  \gamma_2 (e^{z_2 })^{\gamma_2} l_2^{\gamma_2 - 1} \left( \theta_2 (k_{2}^T)^{\frac{\lambda_2-1}{\lambda_2}} +(1-\theta_2)(k_{2}^I)^{\frac{\lambda_2-1}{\lambda_2}} \right)^{\frac{\lambda_2}{\lambda_2-1}\alpha_2}  \nonumber \\
+     & = &  \gamma_2 (e^{z_2 })^{\gamma_2} l_2^{\gamma_2 - 1} \left( \theta_2 (k^T - k_{1}^T)^{\frac{\lambda_2-1}{\lambda_2}} +(1-\theta_2)(k^I -k_{1}^I)^{\frac{\lambda_2-1}{\lambda_2}} \right)^{\frac{\lambda_2}{\lambda_2-1}\alpha_2}  \nonumber \\
+     & = &  w  \quad \quad
+\end{eqnarray}
+
+
+
+
+
+
+
+
+
+
+Gatherer:
+
+$$ V^G(z,w) = \max_{c,k^{\prime},b^{\prime} } \left( u(c) + \beta_G E_z \left[ V(z^{\prime},w^{\prime} \right]  \right) $$
+
+$$ \textsc{s.t.} \quad \quad c+qk^\prime+b^\prime = G(k) + qk +Rb$$
+
+which gives the following equilibrium conditions (after FOCs):
+
+\begin{eqnarray*}
+ q & = & \beta_G E_z\left[ \frac{u^\prime(c^\prime)}{u^\prime(c)}\left(G^\prime(k^\prime)+q\right)\right]\\
+ 1 & = & \beta_G E_z\left[R\frac{u^\prime(c^\prime)}{u^\prime(c)}\right]
+\end{eqnarray*}
+
+
+\subsection*{Parameters}
+
+
+\begin{verbatim}
+params.a=1;
+
+\end{verbatim}
+
+
+
+\color{lightgray} \begin{verbatim} 
+...
+grids.theta80grid.kF = { linspace(0.01, 0.99, 10) };
+grids.theta80grid.levF = { linspace(0.6,1,20) };
+...
+expers = {'bench',{}; % bench experiment
+    'theta875',{'theta',0.875; 'grid','theta875grid'}; % second
+    'alpha90',{'alpha',0.9; 'alower',0.85; 'grid','alpha90grid'}; % third
+    'theta80',{'theta',0.80; 'grid','theta80grid'};% fourth
+};
+
+\end{verbatim} \color{black}
+
+
+
+
+\subsection*{Part II}
+
+$$b_{t+1}^F \leq \theta \left( a(x_{t+1}) + q(x_{t+1}) \right)k_{t+1}^F  \quad \quad \quad \forall x_{t+1} \in X_{t+1} $$
+
+
+The :
+
+$$ V^F(z,w) = \max_{c,k^{\prime},b^{\prime} } \left( u(c) + \beta_F E_z \left[ V(z^{\prime},w^{\prime} \right]  \right) $$
+
+$$ \textsc{s.t.} \quad \quad c+qk^\prime+b^\prime = ak + qk +Rb - \phi(k^\prime/k - 1)^2k/2$$
+$$b^\prime \leq \theta \left( a^\prime + q^\prime \right)k^\prime $$
+
+which gives the following equilibrium conditions (after FOCs):
+
+\begin{eqnarray*}
+ q & = & \beta_F E_z\left[ \frac{u^\prime(c^\prime)}{u^\prime(c)}(a+q+\frac{\phi((k^\prime/k)^2 -1)}{2})\right]+\mu \theta (a^\prime + q^\prime)\\
+ 1 & = & \mu + \beta_F E_z\left[R\frac{u^\prime(c^\prime)}{u^\prime(c)}\right] \\
+ 0 & = & \mu \left[\theta (a^\prime + q^\prime) k^\prime + b^\prime\right] 
+\end{eqnarray*}
+
+
+\subsection*{2.a)}
+
+The .
+
+
+
+\subsection*{2.b) New Steady State.}
+
+Again, the steady state is very similar as the previous case, with a few modifications, namely:
+
+\begin{eqnarray*}
+  \mu_F & = & 1-\beta_F/\beta_G  \\
+  q & = & \frac{\beta_F a + \theta a\mu_F}{1-\beta_F - \theta\mu_F}   \\
+  k_{F,ss} & = & \left[ \frac{\alpha \underline{a}(1-\beta_F - \theta\mu_F)\beta_G)}{(1-\beta_G) a (\beta_F + \theta \mu_F)} \right]^{\frac{1}{1-\alpha}}  \\
+  b_F & = & -\theta(q + a) k_{F,ss}
+\end{eqnarray*}
+
+
+\subsection*{2.c) Rewrite constraint.}
+
+Using the minimum of (q+a) at any given time is enough, as that guarantees that it will always be binding (if it is binding for the lowest state). The code already has an implementation for such variable, which needs to be indicated in the `experdef' file, and needs to add $min(q+a))$ in the `calcEquations' files.
+
+
+
+\subsection*{2.f) Main economic effects.}
+
+
+
+%PLOT OF IRFs
+\begin{figure}
+\caption{IRFs 1 for unmodified code:}
+%\includegraphics [width=5in]{PS03_projection_code_modif/Results/GR_orig_diff_IRF1.eps}
+\end{figure}
+
+\begin{figure}
+\caption{IRFs 2 for unmodified code:}
+%\includegraphics [width=4in]{PS03_projection_code_modif/Results/GR_orig_diff_IRF2.eps}
+\end{figure}
+
+
+
+
+% Include table of values for kappa (standard):
+%\begin{center}
+%\begin{tabular}{llll}
+%Y & K & Cons & IntegralV \\ 
+%\hline 
+%1.6919 & 6.4066 & 1.1793 & -0.59333 \\ 
+%\hline 
+%\end{tabular}
+%\end{center}
+
+
+%\vspace{1em}
+%\includegraphics [width=4in]{PS03_projection_code_modif/Results/GR_orig_diff_IRF2.eps}
+
+\end{document}
