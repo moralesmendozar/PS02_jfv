@@ -5,18 +5,44 @@ function [] = testsmolyak()
     d = 5;
     mu = 2;
     a = -4*ones(1,d);%[-1 -1 -1 -1 -1];
-    b = 2*ones(1,d);%*[1 1 1 1 1 1];    
+    b = 2*ones(1,d);%*[1 1 1 1 1 1];
+    aG = [0.001 0.001 0.001 1 1];
+    bG = 2*ones(1,d);
 
     %Get list of points for f to be evaluated at (only has to be done once :)
-    [x ienumlist] = smolyakapprox_step1(d,mu,a,b); 
+    [x ienumlist] = smolyakapprox_step1(d,mu,a,b);
     
+    [GridKT ienumlistKT] = smolyakapprox_step1(d,mu,aG,bG);
+    GridKI = 
+    
+    ienumlistKI = ienumlistKT;
+    ienumlistB = ienumlistKT;
+    ienumlistZ1 = ienumlistKT;
+    ienumlistB = ienumlistKT;
+    
+    [GridKI ienumlistKI] = smolyakapprox_step1(d,mu,aG,aG);
+    [GridB ienumlistB] = smolyakapprox_step1(d,mu,aG,aG);
+    [GridZ1 ienumlistZ1] = smolyakapprox_step1(d,mu,aG,aG);
+    [GridZ2 ienumlistZ2] = smolyakapprox_step1(d,mu,aG,aG);
+    
+    fx = fcn(x);
+%   fx1 = 
+%   fx2 = 
+%   fx3 = 
+%   fx4 = 
+%   fx5 = 
+
     for ind = 1:2000
-
-        fx = fcn(x);
-
+        
         %Calculate coefficients using calculated values of f
         [ienumlist] = smolyakapprox_step2(fx,ienumlist);
-
+        
+        [ienumlistKT] = smolyakapprox_step2(fx,ienumlist);
+        [ienumlistKI] = smolyakapprox_step2(fx,ienumlist);
+        [ienumlistB] = smolyakapprox_step2(fx,ienumlist);
+        [ienumlistZ1] = smolyakapprox_step2(fx,ienumlist);
+        [ienumlistZ2] = smolyakapprox_step2(fx,ienumlist);
+        
         %Evalutate approximated f at whatever values one wishes
         xpts = 2*rand(32,d)-1; %get random draw from [-1,1]^d
         for dind = 1:d
