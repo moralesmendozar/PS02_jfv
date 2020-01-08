@@ -1,4 +1,4 @@
-function [lab1] = labor1(k1T,k1I,kpT,bp,states,params)
+function [lab1] = labor1(k1T,k1I,z1,params)
 
     lambda1 = params.lambda1;
     theta1 = params.theta1;
@@ -32,7 +32,7 @@ function [lab1] = labor1(k1T,k1I,kpT,bp,states,params)
 %     kT = states(1);
 %     kI = states(2);
 %     b = states(3);
-    z1 = states(4);
+%     z1 = states(4);
 %     z2 = states(5);
     
 %     if z1 == z1_grid(1)

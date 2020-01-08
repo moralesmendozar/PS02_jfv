@@ -2,7 +2,7 @@ function [] = testsmolyak()
            
     %fcn = @(x) 1+sum(min(x.^4,.33),2); %fx = exp(-sum(x.^2,2)); 
     fcn = @(x) sum(x.^3,2); %fx = exp(-sum(x.^2,2)); 
-    d = 5;
+    d = 3;
     mu = 2;
     a = -4*ones(1,d);%[-1 -1 -1 -1 -1];
     b = 2*ones(1,d);%*[1 1 1 1 1 1];
@@ -11,7 +11,7 @@ function [] = testsmolyak()
 
     %Get list of points for f to be evaluated at (only has to be done once :)
     [x ienumlist] = smolyakapprox_step1(d,mu,a,b);
-    [n d] = size(x);
+    [numPointsSmolyak d] = size(x);
     
     [GridKT ienumlistKT] = smolyakapprox_step1(d,mu,aG,bG);
     GridKI = GridKT;
@@ -26,14 +26,16 @@ function [] = testsmolyak()
     
     
     d = fcn(x);  %idea
+    options = ['display','false']
     
-    for i 1:n
-        states = GridKT(i,:);
-       [ds focs] = fsolve(@(ds)FOCS(ds,states,params),dsinit);
-%   d1 = ds(1); 
-%   d2 = ds(2);
-%   d3 = ds(3); 
-%   d4 = ds(4);
+    for i=1:numPointsSmolyak
+        statesi = GridKT(i,:);
+       [ds11 focs11] = fsolve(@(ds)FOCS(ds,statesi,z1,z2,params,dKT11,dKI11,dkpT),dsinit,options);
+%   d1_11 = ds(1); 
+%   d2_11 = ds(2);
+%   d3_11 = ds(3); 
+%   d4_11 = ds(4);
+    end
 
 
     for ind = 1:2000
@@ -41,11 +43,11 @@ function [] = testsmolyak()
         %Calculate coefficients using calculated values of f
         [ienumlist] = smolyakapprox_step2(d,ienumlist);
         
-        [ienumlistKT] = smolyakapprox_step2(d1,ienumlist);
-        [ienumlistKI] = smolyakapprox_step2(d2,ienumlist);
-        [ienumlistB] = smolyakapprox_step2(d3,ienumlist);
-        [ienumlistZ1] = smolyakapprox_step2(d4,ienumlist);
-        [ienumlistZ2] = smolyakapprox_step2(d5,ienumlist);
+        [ienumlistKT11] = smolyakapprox_step2(d1,ienumlist);
+        [ienumlistKI11] = smolyakapprox_step2(d2,ienumlist);
+        [ienumlistB11] = smolyakapprox_step2(d3,ienumlist);
+%         [ienumlistZ1] = smolyakapprox_step2(d4,ienumlist);
+%         [ienumlistZ2] = smolyakapprox_step2(d5,ienumlist);
         
         %Evalutate approximated f at whatever values one wishes
         xpts = 2*rand(32,d)-1; %get random draw from [-1,1]^d
@@ -56,7 +58,12 @@ function [] = testsmolyak()
         if ind==1
             [fhat,work] = smolyakapprox_step3(ienumlist,xpts);
         else
-            [fhat,work] = smolyakapprox_step3(ienumlist,xpts,work);
+            [fhat,work] = smolyakapprox_step3(ienumlistKT11,xpts,work);
+            
+            dKT11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
+            dKI11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
+            dB11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
+            
         end
 
     end

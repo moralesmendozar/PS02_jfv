@@ -2,7 +2,7 @@ function [] = testsmolyak()
            
     %fcn = @(x) 1+sum(min(x.^4,.33),2); %fx = exp(-sum(x.^2,2)); 
     fcn = @(x) sum(x.^3,2); %fx = exp(-sum(x.^2,2)); 
-    d = 5;
+    d = 3;
     mu = 2;
     a = -4*ones(1,d);%[-1 -1 -1 -1 -1];
     b = 2*ones(1,d);%*[1 1 1 1 1 1];
@@ -11,7 +11,7 @@ function [] = testsmolyak()
 
     %Get list of points for f to be evaluated at (only has to be done once :)
     [x ienumlist] = smolyakapprox_step1(d,mu,a,b);
-    [n d] = size(x);
+    [numPointsSmolyak d] = size(x);
     
     [GridKT ienumlistKT] = smolyakapprox_step1(d,mu,aG,bG);
     GridKI = GridKT;
@@ -26,15 +26,34 @@ function [] = testsmolyak()
     
     
     d = fcn(x);  %idea
-    options = ['display','false']
+    options = optimset('Display','off');
     
-    for i 1:n
-        states = GridKT(i,:);
-       [ds focs] = fsolve(@(ds)FOCS(ds,states,params),dsinit,options);
-%   d1 = ds(1); 
-%   d2 = ds(2);
-%   d3 = ds(3); 
-%   d4 = ds(4);
+    d1_11 = zeros(1,numPointsSmolyak);
+    d1_12 = zeros(1,numPointsSmolyak);
+    d1_21 = zeros(1,numPointsSmolyak);
+    d1_22 = zeros(1,numPointsSmolyak);
+    d2_11 = zeros(1,numPointsSmolyak);
+    d2_12 = zeros(1,numPointsSmolyak);
+    d2_21 = zeros(1,numPointsSmolyak);
+    d2_22 = zeros(1,numPointsSmolyak);
+    d3_11 = zeros(1,numPointsSmolyak);
+    d3_12 = zeros(1,numPointsSmolyak);
+    d3_21 = zeros(1,numPointsSmolyak);
+    d3_22 = zeros(1,numPointsSmolyak);
+    d4_11 = zeros(1,numPointsSmolyak);
+    d4_12 = zeros(1,numPointsSmolyak);
+    d4_21 = zeros(1,numPointsSmolyak);
+    d4_22 = zeros(1,numPointsSmolyak);
+    
+    %find the policy functions in each point of the smolyak grid
+    for i=1:numPointsSmolyak
+        statesi = GridKT(i,:);
+       [ds11 focs11] = fsolve(@(ds)FOCS(ds,statesi,z1,z2,params,dKT11,dKT12,dKT21,dKT22,dKI11,dKI12,dKI21,dKI22),dsinit,options);
+%   d1_11(i) = ds(1); 
+%   d2_11 = ds(2);
+%   d3_11 = ds(3); 
+%   d4_11 = ds(4);
+    end
 
 
     for ind = 1:2000
@@ -42,9 +61,9 @@ function [] = testsmolyak()
         %Calculate coefficients using calculated values of f
         [ienumlist] = smolyakapprox_step2(d,ienumlist);
         
-        [ienumlistKT] = smolyakapprox_step2(d1,ienumlist);
-        [ienumlistKI] = smolyakapprox_step2(d2,ienumlist);
-        [ienumlistB] = smolyakapprox_step2(d3,ienumlist);
+        [ienumlistKT11] = smolyakapprox_step2(d1_11,ienumlist);
+        [ienumlistKI11] = smolyakapprox_step2(d2,ienumlist);
+        [ienumlistB11] = smolyakapprox_step2(d3,ienumlist);
 %         [ienumlistZ1] = smolyakapprox_step2(d4,ienumlist);
 %         [ienumlistZ2] = smolyakapprox_step2(d5,ienumlist);
         
@@ -57,10 +76,12 @@ function [] = testsmolyak()
         if ind==1
             [fhat,work] = smolyakapprox_step3(ienumlist,xpts);
         else
-            [fhat,work] = smolyakapprox_step3(ienumlist,xpts,work);
-            dKT =@(s)smolyakapprox_step3(ienumlist,s,work);
-            dKI =@(s)smolyakapprox_step3(ienumlist,s,work);
-            dB =@(s)smolyakapprox_step3(ienumlist,s,work);
+            [fhat,work] = smolyakapprox_step3(ienumlistKT11,xpts,work);
+            
+            dKT11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
+            dKI11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
+            dKPT11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
+            dB11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
             
         end
 
