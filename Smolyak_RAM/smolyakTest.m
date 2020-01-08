@@ -45,8 +45,8 @@ function [] = testsmolyak()
         [ienumlistKT] = smolyakapprox_step2(d1,ienumlist);
         [ienumlistKI] = smolyakapprox_step2(d2,ienumlist);
         [ienumlistB] = smolyakapprox_step2(d3,ienumlist);
-        [ienumlistZ1] = smolyakapprox_step2(d4,ienumlist);
-        [ienumlistZ2] = smolyakapprox_step2(d5,ienumlist);
+%         [ienumlistZ1] = smolyakapprox_step2(d4,ienumlist);
+%         [ienumlistZ2] = smolyakapprox_step2(d5,ienumlist);
         
         %Evalutate approximated f at whatever values one wishes
         xpts = 2*rand(32,d)-1; %get random draw from [-1,1]^d
@@ -58,6 +58,10 @@ function [] = testsmolyak()
             [fhat,work] = smolyakapprox_step3(ienumlist,xpts);
         else
             [fhat,work] = smolyakapprox_step3(ienumlist,xpts,work);
+            dKT =@(s)smolyakapprox_step3(ienumlist,s,work);
+            dKI =@(s)smolyakapprox_step3(ienumlist,s,work);
+            dB =@(s)smolyakapprox_step3(ienumlist,s,work);
+            
         end
 
     end
