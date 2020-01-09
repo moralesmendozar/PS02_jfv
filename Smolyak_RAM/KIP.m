@@ -1,4 +1,4 @@
-function [kip] = KIP(k1T,k1I,states,params)
+function [kip] = KIP(k1T,k1I,states,z1,z2,params,dl2)
     lambda1 = params.lambda1;
     theta1 = params.theta1;
     alpha1 = params.alpha1;
@@ -31,10 +31,10 @@ function [kip] = KIP(k1T,k1I,states,params)
     kT = states(1);
     kI = states(2);
     b = states(3);
-    z1 = states(4);
-    z2 = states(5);
+%     z1 = states(4);
+%     z2 = states(5);
     
     kip = (theta1.*(kT-k1T).^((lambda2-1)/lambda2) +...
         (1-theta2).*(kI-k1I).^((lambda2-1)/lambda2) ).^(lambda2*alpha2/(lambda2-1))...
-        .*(exp(z2)*labor2(k1T,k1I,kpT,bp,states,params)).^gamma2+(1-deltaI).*kI;
+        .*(exp(z2)*dl2(k1T,k1I,kpT,bp,states,params)).^gamma2+(1-deltaI).*kI;
 end

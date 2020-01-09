@@ -82,6 +82,7 @@ function [] = testsmolyak()
             dKI11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
             dKPT11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
             dB11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
+            dl2 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
             
         end
 

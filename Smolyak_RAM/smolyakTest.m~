@@ -26,12 +26,30 @@ function [] = testsmolyak()
     
     
     d = fcn(x);  %idea
-    options = ['display','false']
+    options = optimset('Display','off');
     
+    d1_11 = zeros(1,numPointsSmolyak);
+    d1_12 = zeros(1,numPointsSmolyak);
+    d1_21 = zeros(1,numPointsSmolyak);
+    d1_22 = zeros(1,numPointsSmolyak);
+    d2_11 = zeros(1,numPointsSmolyak);
+    d2_12 = zeros(1,numPointsSmolyak);
+    d2_21 = zeros(1,numPointsSmolyak);
+    d2_22 = zeros(1,numPointsSmolyak);
+    d3_11 = zeros(1,numPointsSmolyak);
+    d3_12 = zeros(1,numPointsSmolyak);
+    d3_21 = zeros(1,numPointsSmolyak);
+    d3_22 = zeros(1,numPointsSmolyak);
+    d4_11 = zeros(1,numPointsSmolyak);
+    d4_12 = zeros(1,numPointsSmolyak);
+    d4_21 = zeros(1,numPointsSmolyak);
+    d4_22 = zeros(1,numPointsSmolyak);
+    
+    %find the policy functions in each point of the smolyak grid
     for i=1:numPointsSmolyak
         statesi = GridKT(i,:);
-       [ds11 focs11] = fsolve(@(ds)FOCS(ds,statesi,z1,z2,params,dKT11,dKI11,dkpT),dsinit,options);
-%   d1_11 = ds(1); 
+       [ds11 focs11] = fsolve(@(ds)FOCS(ds,statesi,z1,z2,params,dKT11,dKT12,dKT21,dKT22,dKI11,dKI12,dKI21,dKI22),dsinit,options);
+%   d1_11(i) = ds(1); 
 %   d2_11 = ds(2);
 %   d3_11 = ds(3); 
 %   d4_11 = ds(4);
@@ -43,7 +61,7 @@ function [] = testsmolyak()
         %Calculate coefficients using calculated values of f
         [ienumlist] = smolyakapprox_step2(d,ienumlist);
         
-        [ienumlistKT11] = smolyakapprox_step2(d1,ienumlist);
+        [ienumlistKT11] = smolyakapprox_step2(d1_11,ienumlist);
         [ienumlistKI11] = smolyakapprox_step2(d2,ienumlist);
         [ienumlistB11] = smolyakapprox_step2(d3,ienumlist);
 %         [ienumlistZ1] = smolyakapprox_step2(d4,ienumlist);
@@ -62,7 +80,9 @@ function [] = testsmolyak()
             
             dKT11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
             dKI11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
+            dKPT11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
             dB11 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
+            dl2 =@(s)smolyakapprox_step3(ienumlistKT11,s,work);
             
         end
 

@@ -48,7 +48,7 @@ function [lab2] = labor2(k1T,k1I,kTp,bp,dKT11,dKT12,dKT21,dKT22,dKI11,dKI12,dKI2
     
     %to state z11
     p11 = mT1(z1i,1)*mT2(z1i,1);% to z11, 
-    kip = KIP(k1T,k1I,states,z1,z2,params,dl2);
+    kip = KIP(k1T,k1I,states,z1,z2,params,);
     k1Tp = dKT1(1,[kTp,kip,bp]);
     k1Ip = dKI1(1,[kTp,kip,bp]);
     zprime = z1_grid(1);
@@ -93,21 +93,6 @@ function [lab2] = labor2(k1T,k1I,kTp,bp,dKT11,dKT12,dKT21,dKT22,dKI11,dKI12,dKI2
     
     EE = p11.*E11 + p12.*E12 + p21.*E21 + p22.*E22;
     EE = EE./(1+rFirm);
-    
-    
-    
-    % Expectation
-    Evalue = 0;
-    for iZ1next = 1:size(mTransition1,2)
-         Evalue = Evalue + mTransition1(iZ1, iZ1next) * p.alpha1 * (1-p.theta1) .* (fhat_k1_I).^(-1/p.lambda1)*(p.theta1.*(fhat_k1_T).^((p.lambda1-1)/p.lambda1)* ...
-          (1-p.theta1).*(fhat_k1_I).^((p.lambda1-1)/p.lambda1)).^((p.lambda1*p.alpha1/(p.lambda1-1))-1).* ...
-            (exp(z1_grid(iZ1next)).*fhat_l1).^(p.gamma1);
-    end
-    
-    % Result
-    l2 = (1/(1+p.r_i)* p.gamma1 .* exp(z2).^p.gamma2 * (p.theta2.*(k_T - k1_T).^((p.lambda2-1)/p.lambda2) + ...
-         (1-p.theta2).*(k_I - k1_I).^(lambda2/(lambda2-1))).^(lambda2*alpha2/(lambda2-1)) ./ w .* Evalue).^(1/(1-p.gamma2));
-    
     
     lab2 = ( wage/ ( EE.* (theta2*(kT-k1T).^((lambda2-1)/lambda2)+...
         (1-theta2)*(kI-k1I).^(lambda2/(lambda2-1)) ).^(lambda2*alpha2/(lambda2-1)) .*...
