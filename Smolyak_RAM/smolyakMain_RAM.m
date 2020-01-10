@@ -13,6 +13,7 @@ function [] = smolyakMain_RAM()
     % FSOLVE W/ DYNARE'S VALUES AS INITIAL GUESS
     x0 =[0.00590718, 0.00191017, 0.00598928,  0.00195713, 0.00393336, 9.32542e-05];
     x0 = [0.0086168, 0.0012747,  0.0090318,   0.0014001,  0.0039714,    0.00023721];
+    x0 = [0.18205, 0.0078834, 0.300226, 0.4006, 0.163 0.37746];
     %x0 = 0.1*ones(1,6);
     options = optimoptions('fsolve','Display','iter');
     [x,fval] = fsolve(@(x)ss_foc(x,params),x0,options);
@@ -60,7 +61,7 @@ z2               		 0
     d = 3;              % number of states
     mu = 2;     % indirect number of Tschebyschow polynomial aproximation
     %a = -4*ones(1,d);   % lower bounds for the states
-    aG = [0.001 0.001 -0.8];%0.001];
+    aG = [0.001 0.001 -0.6];%0.001];
     a = aG;
     %b = 2*ones(1,d);    % upper bounds for the states
     bG = 0.5*ones(1,d);
@@ -125,10 +126,24 @@ z2               		 0
     while( convErr>tol && ite < maxite)
 %    for ind = 1:2000
         ite = ite+1;
+        dKT1previous = dKT1;
+        dKI1previous = dKI1;
+        dKPTprevious = dKPT;
+        dBprevious = dB;
+        dl1previous = dl1;
+        dl2previous = dl2;
+        
+        d_k1Tprevious = d_k1T;
+        d_k1Iprevious = d_k1I;
+        d_kTPprevious = d_kTP;
+        d_bprevious = d_b;
+        d_l1previous = d_l1;
+        d_l2previous = d_l2;
         
         % Find the policy functions in each point of the smolyak grid
         % solving the FOCs
         if ite ==1
+            %dKT1previous = @(s) 10*ones(1,4); %force the first error large
             dsinit = [k1tss,k1iss,kptss, bss];
             for ii=1:numPointsSmolyak
                 statesi = GridKT(ii,:);
@@ -159,7 +174,7 @@ z2               		 0
                     zz = exo_states(jj,:);
                     z1 = zz(1);
                     z2 = zz(2);
-                    dsinit = [dKT1previous(ii,jj),dKI1previous(ii,jj),dKPTprevious(ii,jj), dBprevious(ii,jj)];
+                    dsinit = [d_k1Tprevious(ii,jj),d_k1Iprevious(ii,jj),d_kTPprevious(ii,jj), d_bprevious(ii,jj)];
                     [dssolv, ~, exitfalg] = fsolve(@(ds)FOCS(ds,statesi,z1,z2,params,dKT1,dKI1,dB,dl2),dsinit,options);
                     if exitfalg <1   %if no solution found, keep previous solution
                         dssolv = dsinit;
@@ -193,12 +208,7 @@ z2               		 0
             xpts(:,dind) = (xpts(:,dind)+1)*(b(dind)-a(dind))/2 + a(dind); 
         end
         
-        dKT1previous = dKT1;
-        dKI1previous = dKI1;
-        dKPTprevious = dKPT;
-        dBprevious = dB;
-        dl1previous = dl1;
-        dl2previous = dl2;
+        
         dKT1 = @(s)smolyakapprox_step3(ienumlistKT1,s);
         dKI1 = @(s)smolyakapprox_step3(ienumlistKI1,s);
         dKPT = @(s)smolyakapprox_step3(ienumlistKTp,s);
@@ -213,7 +223,8 @@ z2               		 0
             display(['iteration = ', num2str(ite), '. And error = ', num2str(convErr)]);
         end %if ite for display
     end %policy iteration while
-    ite
+    
+    display(['Total iterations = ', num2str(ite), '. And error = ', num2str(convErr)]);
     %ienumlist
 
     %Compare true value with residual
