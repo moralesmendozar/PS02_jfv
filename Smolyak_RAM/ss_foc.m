@@ -7,11 +7,15 @@ function [F] = ss_foc(x,p)
     r_i = p.rFirm;
     w = p.wage;
     % 1. FOC w.r.t. k1_T
-    F(1) =  p.theta1/(1-p.theta1)*(x(1)/x(2))^(-1/p.lambda1) - (1/(1+r_i))*p.theta2*p.alpha2*(x(3)-x(1))^(-1/p.lambda2)*(p.theta2*(x(3)-x(1))^((p.lambda2 - 1)/p.lambda2) + (1-p.theta2)*(x(4)-x(2))^((p.lambda2 - 1)/p.lambda2))^(p.lambda2*p.alpha2/(p.lambda2-1)-1)* x(6)^p.gamma2;
+    F(1) =  p.theta1/(1-p.theta1)*(x(1)/x(2))^(-1/p.lambda1) - ...
+        (1/(1+r_i))*p.theta2*p.alpha2*(x(3)-x(1))^(-1/p.lambda2)*(p.theta2*(x(3)-x(1))^((p.lambda2 - 1)/p.lambda2) +...
+        (1-p.theta2)*(x(4)-x(2))^((p.lambda2 - 1)/p.lambda2))^(p.lambda2*p.alpha2/(p.lambda2-1)-1)* x(6)^p.gamma2;
            
     
     % 2. FOC w.r.t. k1_I
-    F(2) = 1 - (1/(1+r_i))*(1-p.theta2)*p.alpha2*(x(4)-x(2))^(-1/p.lambda2)*(p.theta2*(x(3)-x(1))^((p.lambda2 - 1)/p.lambda2) + (1-p.theta2)*(x(4)-x(2))^((p.lambda2 - 1)/p.lambda2))^(p.lambda2*p.alpha2/(p.lambda2-1)-1)* x(6)^p.gamma2;
+    F(2) = 1 - (1/(1+r_i))*(1-p.theta2)*p.alpha2*(x(4)-...
+        x(2))^(-1/p.lambda2)*(p.theta2*(x(3)-x(1))^((p.lambda2 - 1)/p.lambda2) +...
+        (1-p.theta2)*(x(4)-x(2))^((p.lambda2 - 1)/p.lambda2))^(p.lambda2*p.alpha2/(p.lambda2-1)-1)* x(6)^p.gamma2;
         
     
     % 3. FOC w.r.t. kT' 
@@ -19,7 +23,8 @@ function [F] = ss_foc(x,p)
     
     
     % 4. LoM of intangible capital
-    F(4) = p.deltaI*x(4) - (p.theta2*(x(3)-x(1))^((p.lambda2 - 1)/p.lambda2) + (1-p.theta2)*(x(4)-x(2))^((p.lambda2 - 1)/p.lambda2))^(p.lambda2*p.alpha2/(p.lambda2-1)) * x(6)^p.gamma2;
+    F(4) = p.deltaI*x(4) - (p.theta2*(x(3)-x(1))^((p.lambda2 - 1)/p.lambda2) + ...
+        (1-p.theta2)*(x(4)-x(2))^((p.lambda2 - 1)/p.lambda2))^(p.lambda2*p.alpha2/(p.lambda2-1)) * x(6)^p.gamma2;
     
     
     % 5. FOC w.r.t. l1
@@ -27,7 +32,7 @@ function [F] = ss_foc(x,p)
     
     
     % 6. FOC w.r.t. l2
-    F(6) = w - (1/(1 + r_i)) * p.gamma2 * x(6)^(p.gamma2-1)*(p.theta2*(x(3)-x(1))^((p.lambda2-1)/p.lambda2) + (1-p.theta2)*(x(3)-x(1))^((p.lambda2-1)/p.lambda2))^(p.lambda2*p.alpha2/(p.lambda2-1))...
+    F(6) = w - (1/(1 + r_i)) * p.gamma2 * x(6)^(p.gamma2-1)*(p.theta2*(x(3)-x(1))^((p.lambda2-1)/p.lambda2) + (1-p.theta2)*(x(4)-x(2))^((p.lambda2-1)/p.lambda2))^(p.lambda2*p.alpha2/(p.lambda2-1))...
         * p.alpha1*(1-p.theta1)*x(2)^(-1/p.lambda1)*(p.theta1*x(1)^((p.lambda1-1)/p.lambda1) + (1-p.theta1)*x(2)^((p.lambda1-1)/p.lambda1))^(p.lambda1*p.alpha1/(p.lambda1-1)-1)* x(5)^p.gamma1;
 
    

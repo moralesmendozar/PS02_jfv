@@ -12,6 +12,8 @@ function [] = smolyakMain_RAM()
     % Solving for [k1_T, k1_I, k_T, K_I, l1, l2] using FOC + LoM
     % FSOLVE W/ DYNARE'S VALUES AS INITIAL GUESS
     x0 =[0.00590718, 0.00191017, 0.00598928,  0.00195713, 0.00393336, 9.32542e-05];
+    x0 = [0.0086168, 0.0012747,  0.0090318,   0.0014001,  0.0039714,    0.00023721];
+    %x0 = 0.1*ones(1,6);
     options = optimoptions('fsolve','Display','iter');
     [x,fval] = fsolve(@(x)ss_foc(x,params),x0,options);
 
