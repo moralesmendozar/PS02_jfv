@@ -1,4 +1,4 @@
-function [lab2] = labor2(k1T,k1I,kTp,bp,dKT1,dKI1,dl2,states,z1,z2,params)
+function [ff1] = foc1(k1T,k1I,kTp,bp,l1,l2,states,z1,z2, params,dKT1,dKI1,dl2)
 
     lambda1 = params.lambda1;
     theta1 = params.theta1;
@@ -43,6 +43,9 @@ function [lab2] = labor2(k1T,k1I,kTp,bp,dKT1,dKI1,dl2,states,z1,z2,params)
     else
         z2i = 2;
     end
+    
+    
+    
     
     kip = KIP(k1T,k1I,states,z1,z2,params,dl2);
     
@@ -96,8 +99,17 @@ function [lab2] = labor2(k1T,k1I,kTp,bp,dKT1,dKI1,dl2,states,z1,z2,params)
     EE = p11.*E11 + p12.*E12 + p21.*E21 + p22.*E22;
     EE = EE./(1+rFirm);
     
-    lab2 = ( wage/ ( EE.* (theta2*(kT-k1T).^((lambda2-1)/lambda2)+...
-        (1-theta2)*(kI-k1I).^(lambda2/(lambda2-1)) ).^(lambda2*alpha2/(lambda2-1)) .*...
-        gamma2*exp(z2*gamma2) ) ) .^( 1/(gamma2-1) );
+    ff1 = theta1*alpha1*k1T.^(-1/lambda1)*...
+        (theta1*k1T.^((lambda1-1)/lambda1)+...
+        (1-theta1)*k1I.^((lambda1-1)/(lambda1)) ).^(lambda1*alpha1/(lambda1-1)-1) .*...
+        (exp(z1).*l1).^gamma1 - EE*theta2*alpha2*(kT-k1T).^(-1/lambda2).*...
+        (theta2*(kT -k1T).^((lambda2-1)/lambda2)+...
+        (1-theta2)*(kI-k1I).^((lambda2-1)/(lambda2)) ).^(lambda2*alpha2/(lambda2-1)-1) .*...
+        (exp(z2).*l2).^gamma2;
+        
+    
+    %( wage/ ( EE.* (theta2*(kT-k1T).^((lambda2-1)/lambda2)+...
+    %    (1-theta2)*(kI-k1I).^(lambda2/(lambda2-1)) ).^(lambda2*alpha2/(lambda2-1)) .*...
+    %    gamma2*exp(z2*gamma2) ) ) .^( 1/(gamma2-1) );
     
 end

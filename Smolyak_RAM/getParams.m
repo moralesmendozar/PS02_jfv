@@ -46,12 +46,12 @@ function [p] = getParams()
     params.wage = wage;
     
     % 1st technology
-    params.z1_grid = exp([0.95; 1.05]);
+    params.z1_grid = [0.95; 1.05];
     params.mTransition1 =  [0.95 0.05; ...
                                 0.05 0.95];
 
     % 2nd technology       
-    params.z2_grid = exp([0.90; 1.10]);
+    params.z2_grid = [0.90; 1.10];
     params.mTransition2 =  [0.90 0.10; ...
                                 0.10 0.90];
     

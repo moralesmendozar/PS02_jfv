@@ -13,7 +13,7 @@ function [kip] = KIP(k1T,k1I,states,z1,z2,params,dl2)
     deltaT = params.deltaT;
     deltaI = params.deltaI;
 
-    prices
+    %prices
     rFirm = params.rFirm;
     rBond = params.rBond;
     wage = params.wage;
@@ -33,8 +33,30 @@ function [kip] = KIP(k1T,k1I,states,z1,z2,params,dl2)
     b = states(3);
 %     z1 = states(4);
 %     z2 = states(5);
+    if z1 == z1_grid(1)
+        z1i =1;
+        if z2 == z2_grid(1)
+            z2i = 1;
+            zzi = 1;
+        else
+            z2i = 2;
+            zzi = 2;
+        end
+    else
+        z1i = 2;
+        if z2 == z2_grid(1)
+            z2i =1;
+            zzi = 3;
+        else
+            z2i = 2;
+            zzi = 4;
+        end
+    end
+    
+    l2 = dl2([kT,kI,b]);
+    lab2 = l2(zzi);
     
     kip = (theta1.*(kT-k1T).^((lambda2-1)/lambda2) +...
         (1-theta2).*(kI-k1I).^((lambda2-1)/lambda2) ).^(lambda2*alpha2/(lambda2-1))...
-        .*(exp(z2)*dl2(k1T,k1I,kpT,bp,states,params)).^gamma2+(1-deltaI).*kI;
+        .*(exp(z2).*lab2).^gamma2+(1-deltaI).*kI;
 end

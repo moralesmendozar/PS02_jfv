@@ -28,6 +28,10 @@ function [] = testsmolyak()
     d = fcn(x);  %idea
     options = optimset('Display','off');
     
+    %small test on how fsolve works :P
+    xsol1test = fsolve(@(x)ftest(x),1,options);
+    [y1 yextra yextra2] = ftest(xsol1test);
+    
     d1_11 = zeros(1,numPointsSmolyak);
     d1_12 = zeros(1,numPointsSmolyak);
     d1_21 = zeros(1,numPointsSmolyak);
